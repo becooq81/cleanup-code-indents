@@ -85,6 +85,7 @@
     <textarea id="inputCode" placeholder="Paste your messy code here..."></textarea>
     <button onclick="cleanIndent()">Clean Indents</button>
     <button id="copyButton" onclick="copyToClipboard()">Copy to Clipboard</button>
+    <button id="copyMarkdownButton" onclick="copyMarkdown()">Copy Markdown</button>
     <h3>Cleaned Code:</h3>
     <pre id="cleanedCode"></pre>
 </div>
@@ -115,6 +116,16 @@
         let cleanedCode = document.getElementById('cleanedCode').textContent;
         navigator.clipboard.writeText(cleanedCode).then(() => {
             alert('Code copied to clipboard!');
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+        });
+    }
+    
+    function copyMarkdown() {
+        let cleanedCode = document.getElementById('cleanedCode').textContent;
+        let markdownCode = '```java\n' + cleanedCode + '\n```';
+        navigator.clipboard.writeText(markdownCode).then(() => {
+            alert('Markdown code copied to clipboard!');
         }).catch(err => {
             console.error('Failed to copy: ', err);
         });
