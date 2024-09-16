@@ -95,7 +95,7 @@
     
         let firstNonEmptyLine = lines.find(line => line.trim().length > 0);
         if (!firstNonEmptyLine) {
-            return code; // Return original code if no non-empty lines
+            return code; 
         }
     
         let indentLevel = firstNonEmptyLine.match(/^\s*/)[0].length;
@@ -133,7 +133,6 @@
         return '```java\n' + cleanedCode + '\n```';
     }
     
-    // Optional: Automatically update cleaned code display when input changes
     document.getElementById('inputCode').addEventListener('input', function() {
         let cleanedCode = cleanIndent(this.value);
         document.getElementById('cleanedCode').textContent = cleanedCode;
