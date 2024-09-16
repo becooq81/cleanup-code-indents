@@ -49,7 +49,7 @@
             padding: 10px;
             border: none;
             border-radius: 5px;
-            background-color: #007bff;
+            background-color: #AEC6CF;
             color: white;
             font-size: 16px;
             cursor: pointer;
@@ -57,7 +57,7 @@
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: #FADADD;
         }
 
         pre {
@@ -70,11 +70,11 @@
         }
 
         #copyButton {
-            background-color: #28a745;
+            background-color: #FADADD;
         }
 
         #copyButton:hover {
-            background-color: #218838;
+            background-color: #AEC6CF;
         }
     </style>
 </head>
@@ -83,17 +83,14 @@
 <div class="container">
     <h1>Messy Indent Cleaner</h1>
     <textarea id="inputCode" placeholder="Paste your messy code here..."></textarea>
-    <button onclick="cleanIndent()">Clean Indents</button>
-    <button id="copyButton" onclick="copyToClipboard()">Copy to Clipboard</button>
-    <button id="copyMarkdownButton" onclick="copyMarkdown()">Copy Markdown</button>
+    <button id="copyButton" onclick="copyToClipboard()">Copy cleaned code to Clipboard</button>
+    <button id="copyMarkdownButton" onclick="copyMarkdown()">Copy cleaned code with Markdown to Clipboard</button>
     <h3>Cleaned Code:</h3>
     <pre id="cleanedCode"></pre>
 </div>
 
 <script>
-    function cleanIndent() {
-        let code = document.getElementById('inputCode').value;
-    
+    function cleanIndent(code) {    
         let lines = code.split('\n');
     
         let firstNonEmptyLine = lines.find(line => line.trim().length > 0);
@@ -113,7 +110,7 @@
     }
 
     function copyToClipboard() {
-        let cleanedCode = document.getElementById('cleanedCode').textContent;
+        let cleanedCode = cleanIndent(document.getElementById('inputCode').value);
         navigator.clipboard.writeText(cleanedCode).then(() => {
             alert('Code copied to clipboard!');
         }).catch(err => {
@@ -122,13 +119,17 @@
     }
     
     function copyMarkdown() {
-        let cleanedCode = document.getElementById('cleanedCode').textContent;
-        let markdownCode = '```java\n' + cleanedCode + '\n```';
+        let cleanedCode = cleanIndent(document.getElementById('inputCode').value);
+        let markdownCode = formatMarkdown(cleanedCode);
         navigator.clipboard.writeText(markdownCode).then(() => {
             alert('Markdown code copied to clipboard!');
         }).catch(err => {
             console.error('Failed to copy: ', err);
         });
+    }
+
+    function formatMarkdown(cleanedCode) {
+        return '```java\n' + cleanedCode + '\n```';
     }
 </script>
 
